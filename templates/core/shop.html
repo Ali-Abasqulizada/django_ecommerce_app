@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/shop.css' %}">
+<h1 class="main_word">SHOP</h1>
+<style>
+    @font-face {
+        font-family: 'Outfit';
+        src: url('{% static "fonts/Outfit-Regular.ttf" %}') format('truetype');
+    }
+</style>
+<div class="search_products">
+    <form action="{% url 'core:search' %}">
+        <input type="text" name="keyword" class="search_bar" value="{{ keyword }}">
+        <input type="hidden" name="filter" value="{{ filter }}">
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div class="filter">
+    <form action="{% url 'core:search' %}" method="GET">
+        <select name="filter" onchange="this.form.submit()">
+            <option value="newest" {% if filter == 'newest' %}selected{% endif %}>Newest</option>
+            <option value="oldest" {% if filter == 'oldest' %}selected{% endif %}>Oldest</option>
+            <option value="rating" {% if filter == 'rating' %}selected{% endif %}>Rating</option>
+            <option value="product" {% if filter == 'product' %}selected{% endif %}>Product</option>
+        </select>
+        <input type="hidden" name="keyword" value="{{ keyword }}">
+    </form>
+</div>
+<div class="shop_body">
+    <div class="shop_body_categories">
+        <h1>Categories</h1>
+        {% for category in categories %}
+        <p><a href="{% url 'core:category' name=category.slug %}">{{ category }} ({{ category.product_count }})</a></p>
+        {% endfor %}
+    </div>
+    {% if not products %}
+    <div class="dont_exits">
+        There is not any products
+    </div>
+    {% else %}
+    <div class="shop_body_products">
+        <div class="shop_holder">
+            {% for product in products %}
+                <div class="card-container">
+                    <div class="hero-image_container">
+                        <img class="hero-image" src="{{ product.image.url }}" alt="Spinning glass cube"/>
+                    </div>
+                    <main class="main-content">
+                      <h1><a href="{% url 'core:product' name=product.slug %}">{{ product.name }}</a></h1>
+                      <p class="product_description" >{{ product.description }}</p>
+                      <div class="flex-row">
+                        <div class="coin-base">
+                          <h2>{{ product.price }}$</h2>
+                        </div>
+                        <div class="stars">
+                            {{ product.average_rating|floatformat:1 }} / 5.0
+                        </div>
+                      </div>
+                    </main>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="page_holder">
+            {% if products.paginator.num_pages > 1 %}
+                {% if keyword and filter %}
+                <a href="?keyword={{ keyword }}&filter={{ filter }}&page=1" {% if products.number == 1 %} style="color: hsl(230, 75%, 15%);" {% endif %}>1</a>
+                {% elif keyword %}
+                <a href="?keyword={{ keyword }}&page=1" {% if products.number == 1 %} style="color: hsl(230, 75%, 15%);" {% endif %}>1</a>
+                {% elif filter %}
+                <a href="?filter={{ filter }}&page=1" {% if products.number == 1 %} style="color: hsl(230, 75%, 15%);" {% endif %}>1</a>
+                {% else %}
+                <a href="?page=1" {% if products.number == 1 %} style="color: hsl(230, 75%, 15%);" {% endif %}>1</a>
+                {% endif %}
+                {% if products.number > 4 %}
+                    <span>...</span>
+                {% endif %}
+                {% for page_num in products.paginator.page_range %}
+                    {% if page_num >= products.number|add:-2 and page_num <= products.number|add:2 %}
+                        {% if page_num != 1 and page_num != products.paginator.num_pages %}
+                            {% if keyword and filter %}
+                            <a href="?keyword={{ keyword }}&filter={{ filter }}&page={{ page_num }}" {% if products.number == page_num %} style="color: hsl(230, 75%, 15%);" {% endif %}>{{ page_num }}</a>
+                            {% elif keyword %}
+                            <a href="?keyword={{ keyword }}&page={{ page_num }}" {% if products.number == page_num %} style="color: hsl(230, 75%, 15%);" {% endif %}>{{ page_num }}</a>
+                            {% elif filter %}
+                            <a href="?filter={{ filter }}&page={{ page_num }}" {% if products.number == page_num %} style="color: hsl(230, 75%, 15%);" {% endif %}>{{ page_num }}</a>
+                            {% else %}
+                            <a href="?page={{ page_num }}" {% if products.number == page_num %} style="color: hsl(230, 75%, 15%);" {% endif %}>{{ page_num }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                {% if products.number < products.paginator.num_pages|add:-3 %}
+                    <span>...</span>
+                {% endif %}
+        
+                {# Always show the last page #}
+                {% if keyword and filter %}
+                <a href="?keyword={{ keyword }}&filter={{ filter }}&page={{ products.paginator.num_pages }}" {% if products.number == products.paginator.num_pages %} style="color: hsl(230, 75%, 15%);" {% endif %}>{{ products.paginator.num_pages }}</a>
+                {% elif keyword %}
+                <a href="?keyword={{ keyword }}&page={{ products.paginator.num_pages }}" {% if products.number == products.paginator.num_pages %} style="color: hsl(230, 75%, 15%);" {% endif %}>{{ products.paginator.num_pages }}</a>
+                {% elif filter %}
+                <a href="?filter={{ filter }}&page={{ products.paginator.num_pages }}" {% if products.number == products.paginator.num_pages %} style="color: hsl(230, 75%, 15%);" {% endif %}>{{ products.paginator.num_pages }}</a>
+                {% else %}
+                <a href="?page={{ products.paginator.num_pages }}" {% if products.number == products.paginator.num_pages %} style="color: hsl(230, 75%, 15%);" {% endif %}>{{ products.paginator.num_pages }}</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

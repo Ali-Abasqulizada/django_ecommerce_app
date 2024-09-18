@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/product.css' %}">
+<style>
+  @font-face {
+      font-family: 'Outfit';
+      src: url('{% static "fonts/Outfit-Regular.ttf" %}') format('truetype');
+  }
+</style>
+<div class="product_holder">
+  <div class="product_info_holder">
+    <div class="product_image_holder">
+      <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    </div>
+    <div class="product_text_holder">
+      <h1>{{ product.name }}</h1>
+      <h2>Category: {{ product.category }}</h2>
+      <h3>Price: {{ product.price }}$</h3>
+      <p>{{ product.description }}</p>
+      <div class="product_add_to_cart">
+        <div class="operations">
+          <button><img src="{% static 'img/minus.svg' %}" alt="minus"></button>
+          <div class="add_to_cart_count">1</div>
+          <button><img src="{% static 'img/plus.svg' %}" alt="plus"></button>
+        </div>
+        <form action="{% url 'core:add_cart' name=product.slug %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="quantity" id="cart_count_input" value="1">
+          <button type="submit" class="add_to_cart_button">Add Cart</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="shop_body_categories">
+    <h1>Categories</h1>
+    {% for category in categories %}
+    <p><a href="{% url 'core:category' name=category.slug %}">{{ category }} ({{ category.product_count }})</a></p>
+    {% endfor %}
+  </div>
+</div>
+<div class="review_holder">
+  <h1>Rate Product</h1>
+  <form action="{% url 'core:add_review' id=product.id %}" method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Commit</button>
+  </form>
+</div>
+<div class="all_reviews">
+  {% for review in reviews %}
+  <div class="one_review">
+    <div class="user_info">
+      <div class="user_info_name">
+        <h3>{{ review.created_at|date:"F d, Y" }}</h3>
+        <p>{{ review.user.username }}</p>
+      </div>
+      <p class="stars">
+        {% for star in "★★★★★" %}
+          <span class="{% if forloop.counter <= review.rating %}filled{% else %}empty{% endif %}">★</span>
+        {% endfor %}
+      </p>
+    </div>
+    <div class="user_comment">
+      {{ review.comment }}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<script src="{% static 'js/product.js' %}"></script>
+{% endblock %}

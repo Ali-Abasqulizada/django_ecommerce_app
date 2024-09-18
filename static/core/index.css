@@ -1,0 +1,47 @@
+:root {
+    font-size: 15px;
+}
+
+.main_word {
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 60px;
+    padding-top: 20px;
+}
+
+@media screen and (max-width: 1023px) {
+    .main_word {
+        font-size: 40px;
+    }
+}
+
+.dont_buy_warning {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.dont_buy_warning .subhelper{
+    width: 100%;
+    background-color: #ffeb3b;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dont_buy_warning img {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 15px;
+    user-select: none;
+}
+
+.dont_buy_warning p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    color: #333;
+}

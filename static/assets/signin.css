@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+body{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.container {
+	background: rgba(255, 255, 255, 0.3);
+	max-width: 350px;
+	width: 100%;
+	padding: 25px 30px;
+	border-radius: 5px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+}
+
+.container form .title {
+	font-size: 30px;
+	font-weight: 600;
+	margin: 20px 0 10px 0;
+	position: relative;
+}
+
+.container form .title:before {
+	content: '';
+	position: absolute;
+	height: 4px;
+	width: 33px;
+	left: 0px;
+	bottom: 3px;
+	border-radius: 5px;
+	background: linear-gradient(to right, #99004d 0%, #ff0080 100%);
+}
+
+.container form .input-box {
+	width: 100%;
+	height: 45px;
+	margin-top: 25px;
+	position: relative;
+}
+
+.container form .input-box button {
+	width: 100%;
+	height: 100%;
+	outline: none;
+	font-size: 16px;
+	border: none;
+}
+
+.container form .button {
+	margin: 0px 0 20px 0;
+}
+
+.container .input-box button {
+	background: linear-gradient(to right, #99004d 0%, #ff0080 100%);
+	font-size: 17px;
+	color: #fff;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.container .input-box button:hover {
+	letter-spacing: 1px;
+	background: linear-gradient(to left, #99004d 0%, #ff0080 100%);
+}
+
+.register{
+	color: black
+}
+
+.register a{
+	color: black
+}
+
+.home{
+	width: 20px;
+	height: 20px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"]{
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus{
+    border-color: #ff0080;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 0, 128, 0.2);
+}
+
+.back{
+	width: 100%;
+	height: 100vh;
+	position: absolute;
+	z-index: -1;
+}
+
+
+/* General style for form validation errors */
+ul.errorlist {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0;
+    margin: 0;
+}
+
+ul.errorlist li {
+    color: #d9534f; /* Red color for error text */
+    font-size: 14px;
+    background-color: #f2dede; /* Light red background */
+    border: 1px solid #ebccd1; /* Red border */
+    padding: 0px 5px 5px 5px;
+    border-radius: 4px;
+}
+
+/* Optional icon for error messages */
+ul.errorlist li::before {
+    content: '⚠ '; 
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+/* Container for positioning error and success messages */
+.message-container {
+    position: absolute;
+    top: 20px; /* Distance from the top */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; /* Adjust width as needed */
+    z-index: 1000; /* Ensure messages are above other content */
+}
+
+/* Specific styles for error messages */
+.error {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text color */
+    border: 1px solid #f5c6cb; /* Light red border */
+}
+
+.error::before {
+    content: '⚠ '; /* Error icon */
+}
+
+.forgot_password{
+	margin-bottom: 5px;
+}
+
+.forgot_password a{
+	color: black;
+}

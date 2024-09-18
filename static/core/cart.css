@@ -1,0 +1,209 @@
+
+:root {
+    --var-card-dark: hsl(216, 50%, 16%);
+    --var-line-dark: hsl(215, 32%, 27%);
+    --var-lightest: white;
+    --var-heading: normal normal 600 1.5em/1.6em 'Outfit', sans-serif;
+    --var-small-heading: normal normal 400 1em/1em 'Outfit', sans-serif;
+    --var-para: normal normal 300 1em/1.55em 'Outfit', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.cart_holder {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.cart_holder img {
+    user-select: none;
+}
+
+.main_word {
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 60px;
+    padding-top: 20px;
+}
+
+.cart_info {
+    flex: 0 1 70%;
+    background-color: var(--var-lightest);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.thead{
+    font: var(--var-small-heading);
+    display: flex;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--var-line-dark);
+}
+
+.thead .image_holder{
+    text-align: center;
+    width: 20%;
+}
+
+.thead .info_holder{
+    text-align: center;
+    width: 16%;
+}
+
+.tbody .trow {
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--var-line-dark);
+    align-items: center;
+}
+
+.tbody .image_holder{
+    text-align: center;
+    width: 20%;
+}
+
+.tbody .info_holder{
+    text-align: center;
+    width: 16%;
+}
+
+.product_img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.tbody a {
+    font: var(--var-small-heading);
+    color: var(--var-card-dark);
+    text-decoration: none;
+}
+
+.tbody p {
+    font: var(--var-small-heading);
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons button {
+    border-radius: 10px;
+    padding: 2px 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.buttons img {
+    width: 25px;
+    height: 25px;
+    transition: transform 0.3s;
+}
+
+.buttons img:hover {
+    transform: scale(1.2);
+}
+
+.payment {
+    position: sticky;
+    height: 100vh;
+    top: 6rem;
+    flex: 0 1 25%;
+    background-color: var(--var-lightest);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.payment h1 {
+    font: var(--var-heading);
+    color: var(--var-card-dark);
+    margin-bottom: 20px;
+}
+
+.payment h2 {
+    font: var(--var-small-heading);
+    margin-bottom: 20px;
+}
+
+.payment button {
+    background-color: var(--var-card-dark);
+    color: var(--var-lightest);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.payment button:hover {
+    background-color: var(--var-line-dark);
+}
+
+.not_available{
+    color: red;
+}
+
+@media screen and (min-width: 850px){
+    .dont_see_cart{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .cart_holder .thead{
+        display: none;
+    }
+
+    .tbody .trow{
+        flex-direction: column;
+    }
+
+    .tbody .image_holder{
+        width: 100%;
+    }
+
+    .tbody .info_holder{
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        border-top: 1px solid var(--var-line-dark);
+        padding: 10px 0px;
+    }
+
+    .product_img {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .cart_holder {
+        flex-direction: column;
+    }
+
+    .cart_info, .payment {
+        position: static;
+        height: auto;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .main_word {
+        font-size: 40px;
+    }
+}

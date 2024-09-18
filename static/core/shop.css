@@ -1,0 +1,331 @@
+:root {  
+    font-size: 15px;
+    /* Neutral */
+    --var-card-dark: hsl(216, 50%, 16%);
+    --var-line-dark: hsl(215, 32%, 27%);
+    --var-lightest: white;
+    
+    /* Fonts */
+    
+    --var-heading: normal normal 600 1.5em/1.6em 'Outfit', sans-serif;
+    
+    --var-small-heading: normal normal 400 1em/1em 'Outfit', sans-serif;
+    
+    --var-para: normal normal 300 1em/1.55em 'Outfit', sans-serif;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    margin: 0;
+}
+
+.shop_body img {
+    width: 100%;
+    border-radius: 15px;
+    display: block;
+    user-select: none;
+}
+
+.shop_body a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.shop_body .shop_body_products h1 {
+    font: var(--var-heading);
+    color: hsl(230, 75%, 15%);
+    padding: 1.2em 0;
+}
+
+.shop_body h2 {
+    font: var(--var-small-heading);
+    color: hsl(230, 75%, 15%);
+}
+
+.shop_body p {
+    font: var(--var-para);
+    color: hsl(230, 75%, 15%);
+}
+
+.shop_body span {
+    color: black;
+}
+
+.shop_body .card-container {
+    width: 100%;
+    max-width: 300px;
+    margin: 2em auto;
+    background-color: hsl(230, 100%, 98%);
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    padding: 2rem;
+    transition: 0.5s;
+}
+
+.shop_body .card-container:hover {
+    box-shadow: 0 0 55px rgba(0, 0, 0, 0.4);
+}
+
+.shop_body div.flex-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shop_body div.coin-base, .time-left, .card-attribute {
+    display: flex;
+    align-items: center;
+    padding: 1em 0;
+}
+
+.shop_body .card-attribute {
+    padding-bottom: 1.5em;
+    border-top: 2px solid var(--var-line-dark);
+}
+
+.shop_body a.hero-image-container {
+    position: relative;
+    display: block;
+}
+
+.shop_body .hero-image{
+    height: 300px;
+    object-fit: cover;
+}
+
+.shop_body img.eye {
+    position: absolute;
+    width: 100%;
+    max-width: 2em;
+    top: 44%;
+    left: 43%;
+}
+
+@media (min-width:400px) {
+    .shop_body img.eye {
+    max-width: 3em;
+}
+}
+
+.shop_body .small-image {
+    width: 1.2em;
+    margin-right: 0.5em;
+}
+
+@media (min-width:600px) {
+    .shop_body {
+        font-size: 18px;
+    }
+}
+
+.shop_holder{
+    display: flex;
+    gap: 20px;
+    flex-wrap:wrap;
+}
+
+.product_description{
+    display: -webkit-box;
+    display: box; /* Add this as a fallback, although it's not widely supported */
+    
+    -webkit-line-clamp: 2;
+    line-clamp: 2; /* This is the suggested standard property, but it won't work yet */
+    
+    -webkit-box-orient: vertical;
+    box-orient: vertical; /* Add the non-prefixed property for future compatibility */
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hero-image{
+    transition: 0.5s;
+}
+
+.hero-image:hover {
+    transform: scale(1.3);
+}
+
+.hero-image_container{
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.page_holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.page_holder a {
+    font: var(--var-small-heading);
+    color: hsl(230, 75%, 15%);
+    padding: 0.5em 0.75em;
+    margin: 0 0.25em;
+    border: 1px solid var(--var-line-dark);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.page_holder a:hover {
+    background-color: var(--var-line-dark);
+    color: white;
+}
+
+.page_holder a[style*="color: hsl(230, 75%, 15%)"] {
+    background-color: hsl(230, 100%, 98%);
+    border: 2px solid hsl(230, 75%, 15%);
+    color: hsl(230, 75%, 15%);
+    font-weight: bold;
+}
+
+.shop_body{
+    display: flex;
+    padding: 20px;
+}
+
+.shop_body_categories{
+    background-color: hsl(230, 100%, 98%);
+    height: 100vh;
+    text-align: center;
+    padding: 0px 40px;
+    margin-top: 2.4rem;
+    border-radius: 15px;
+    position: sticky;
+    top: 5rem;
+}
+
+.shop_body_categories h1{
+    margin-top: 1.5rem;
+    font: var(--var-heading);
+}
+
+.main_word{
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 60px;
+    padding-top: 20px;
+}
+
+@media screen and (max-width: 1023px) {
+    .shop_body{
+        flex-direction: column;
+    }
+
+    .shop_body_categories{
+        position:static;
+        height: auto;
+        padding-bottom: 20px;
+        margin-top: 0px;
+    }
+
+    .main_word{
+        font-size: 40px;
+    }
+}
+
+.dont_exits{
+    font: var(--var-heading);
+    margin: 2em auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 200px;
+    padding: 0px 20px;
+}
+
+.search_products {
+    font-family: 'Outfit', sans-serif;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+    background-color: hsl(230, 100%, 98%);
+}
+
+.search_products form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.search_products .search_bar {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.search_products .search_bar:focus {
+    border-color: #ff0080;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 0, 128, 0.2);
+}
+
+.search_products button {
+    width: 20%;
+    height: 45px;
+    background: linear-gradient(to right, #99004d 0%, #ff0080 100%);
+    font-size: 17px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search_products button:hover {
+    background: linear-gradient(to left, #99004d 0%, #ff0080 100%);
+    letter-spacing: 1px;
+}
+
+.filter{
+    display: flex;
+    justify-content: right;
+    margin: 0px 20px;
+}
+
+.filter select{
+    font-family: 'Outfit', sans-serif;
+    width: 200px;
+    padding: 10px;
+    margin: 20px 0px 0px 0px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 1023px) {
+    .search_products form{
+        flex-direction: column;
+    }
+
+    .search_products .search_bar{
+        width: 100%;
+    }
+
+    .search_products button {
+        width: 100%;
+        padding: 0px 10px;
+    }
+
+    .filter{
+        justify-content: center;
+    }
+
+    .filter form{
+        width: 100%;
+    }
+
+    .filter select{
+        width: 90%;
+        padding: 10px 5%;
+    }
+}

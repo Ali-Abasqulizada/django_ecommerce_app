@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/index.css' %}">
+<h1 class="main_word">HOME</h1>
+<style>
+    @font-face {
+        font-family: 'Outfit';
+        src: url('{% static "fonts/Outfit-Regular.ttf" %}') format('truetype');
+    }
+</style>
+<div class="dont_buy_warning">
+    <div class="subhelper">
+        <img src="{% static 'img/dont_buy_warning.svg' %}" alt="dont_buy_warning">
+        <p>This site is for testing purposes. Don't buy anything. Products are not real.</p>
+    </div>
+</div>
+{% endblock %}

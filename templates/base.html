@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SENJA{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'assets/messages.css' %}">
+</head>
+<body>
+    {% include 'assets/navbar.html' %}
+    <div class="message-container">
+        {% for message in messages %}
+        <div {% if message.tags %} class="message-{{message.tags}}" {% endif %}>{{message}}</div>
+        {% endfor %}
+    </div>
+    {% block body %}
+    {% endblock %}
+</body>
+</html>

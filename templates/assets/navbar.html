@@ -1,0 +1,68 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'assets/navbar.css' %}">
+<style>
+   @font-face {
+     font-family: 'Syne Bold';
+     src: url('{% static "fonts/Syne-Bold.ttf" %}') format('truetype');
+     font-weight: bold;
+     font-style: normal;
+   }
+   @media screen and (max-width: 500px) {
+      .dont_see {
+          display: none;
+      }
+   }
+</style>
+<div class="dumb_div"></div>
+<!--==================== HEADER ====================-->
+<header class="header" id="header" style="font-family: 'Syne Bold', sans-serif;">
+   <nav class="nav container">
+      <img src="{% static 'img/senja.png' %}" alt="senja" class="custom_add_menu_logo">
+      <div class="nav__menu" id="nav-menu">
+         <ul class="nav__list">
+            <li class="nav__item">
+               <a href="{% url 'core:index' %}" class="nav__link">Home</a>
+            </li>
+            <li class="nav__item">
+               <a href="{% url 'core:shop' %}" class="nav__link">Shop</a>
+            </li>
+            <li class="nav__item">
+               <a href="#" class="nav__link">Services</a>
+            </li>
+            <li class="nav__item">
+               <a href="#" class="nav__link">Featured</a>
+            </li>
+            <li class="nav__item">
+               <a href="#" class="nav__link">Contact Me</a>
+            </li>
+         </ul>
+         <!-- Close button -->
+         <div class="nav__close" id="nav-close">
+            <img src="{% static 'img/x.svg' %}" alt="x" class="custom_add_menu_x">
+         </div>
+      </div>
+      <div class="nav__actions">
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'core:cart' %}" class="custom_add_link">
+            <p class="dont_see">Cart</p>
+            <img src="{% static 'img/cart.svg' %}" alt="logout" class="custom_add_menu">
+        </a>
+        <a href="{% url 'user:logout' %}" class="custom_add_link">
+            <p class="dont_see">Logout</p>
+            <img src="{% static 'img/logout.svg' %}" alt="logout" class="custom_add_menu">
+        </a>
+        {% else %}
+         <a href="{% url 'user:login' %}" class="custom_add_link">
+            <p class="dont_see">Signin</p>
+            <img src="{% static 'img/login.svg' %}" alt="signin" class="custom_add_menu">
+        </a>
+        {% endif %}
+         <!-- Toggle button -->
+         <div class="nav__toggle" id="nav-toggle">
+            <img src="{% static 'img/menu.svg' %}" alt="menu" class="custom_add_menu custom_add_menu_l">
+         </div>
+      </div>
+   </nav>
+</header>
+
+<script src="{% static 'js/script.js' %}"></script>

@@ -1,0 +1,130 @@
+{% extends 'base.html'  %}
+{% block body %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/cart.css' %}">
+<h1 class="main_word">Cart</h1>
+<style>
+    @font-face {
+        font-family: 'Outfit';
+        src: url('{% static "fonts/Outfit-Regular.ttf" %}') format('truetype');
+    }
+</style>
+<div class="cart_holder">
+    <div class="cart_info">
+        <div class="thead">
+            <p class="image_holder">Product</p>
+            <p class="info_holder">Name</p>
+            <p class="info_holder">Price</p>
+            <p class="info_holder">Quantity</p>
+            <p class="info_holder">Total</p>
+            <p class="info_holder">Handle</p>
+        </div>
+        <div class="tbody">
+            {% for cart in carts %}
+                <div class="trow" id="cart-item-{{ cart.id }}">
+                    <div class="image_holder"><img src="{{ cart.product.image.url }}" alt="img" class="product_img"></div>
+                    <div class="info_holder">
+                        <p class="dont_see_cart">Name: </p>
+                        <a href="{% url 'core:product' name=cart.product.slug %}">{{ cart.product.name }}</a>
+                    </div>
+                    <div class="info_holder">
+                        <p class="dont_see_cart">Price: </p>
+                        <p>{{ cart.product.price }}$</p>
+                    </div>
+                    <div class="info_holder">
+                        <p class="dont_see_cart">Quantity: </p>
+                        <p>{{ cart.quantity }}</p>
+                    </div>
+                    <div class="info_holder">
+                        <p class="dont_see_cart">Total: </p>
+                        <p class="cart-item-total" data-total="{{ cart.total_price }}">{{ cart.total_price }}$</p>
+                    </div>
+                    <div class="buttons info_holder">
+                        {% if not cart.product.available %}
+                        <p class="not_available">Not available</p>
+                        {% else %}
+                        <button class="add-to-total">
+                            <img src="{% static 'img/correct.svg' %}" alt="✔">
+                        </button>
+                        {% endif %}
+                        <button class="delete-cart-item" data-id="{{ cart.id }}">
+                            <img src="{% static 'img/wrong.svg' %}" alt="X">
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="payment">
+        <h1>Cart total</h1>
+        <h2>Total: <span id="total-amount">0.00</span>$</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit">Buy</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const totalAmountElement = document.getElementById("total-amount");
+        let totalAmount = 0;
+        document.querySelectorAll(".add-to-total").forEach(button => {
+            button.addEventListener("click", function() {
+                const itemTotal = parseFloat(this.closest(".trow").querySelector(".cart-item-total").getAttribute("data-total"));
+
+                if (this.classList.contains("clicked")) {
+                    totalAmount -= itemTotal;
+                    if (totalAmount < 0){
+                        totalAmount = 0
+                    }
+                    totalAmountElement.textContent = totalAmount.toFixed(2);
+
+                    this.classList.remove("clicked");
+                    this.querySelector("img").style.opacity = "1";
+                    this.style.backgroundColor = "";
+                } else {
+                    totalAmount += itemTotal;
+                    totalAmountElement.textContent = totalAmount.toFixed(2);
+                    this.classList.add("clicked");
+                    this.style.backgroundColor = "burlywood";
+                }
+            });
+        });
+
+        document.querySelectorAll(".delete-cart-item").forEach(button => {
+            button.addEventListener("click", function() {
+                const cartItemId = this.getAttribute("data-id");
+                const csrfToken = "{{ csrf_token }}";
+
+                fetch("{% url 'core:delete_cart' id=0 %}".replace('0', cartItemId), {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById(`cart-item-${cartItemId}`).remove();
+                        totalAmount -= parseFloat(data.cart_total);
+                        if (totalAmount < 0){
+                            totalAmount = 0
+                        }
+                        totalAmountElement.textContent = totalAmount.toFixed(2);
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the item. Please try again.');
+                });
+            });
+        });
+    });
+</script>
+
+{% endblock %}

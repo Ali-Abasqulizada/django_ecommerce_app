@@ -1,0 +1,30 @@
+{% load static %}
+<title>SENJA</title>
+<link rel="stylesheet" href="{% static 'assets/signin.css' %}">
+<link rel="stylesheet" href="{% static 'assets/messages.css' %}">
+<div class="message-container">
+    {% for message in messages %}
+    <div {% if message.tags %} class="message-{{message.tags}}" {% endif %}>{{message}}</div>
+    {% endfor %}
+</div>
+<body>
+    <img class="back" src="{% static 'img/login_back.jpg' %}" alt="image">
+    <div class="container">
+        <a href="{% url 'core:index' %}"><img src="{% static 'img/go_home.svg' %}" alt="home" class="home"></a>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="title">Login</div>
+            {{ form.as_p }}
+            <!-- Submit button -->
+             <div class="forgot_password">
+                <a href="{% url 'user:password_reset_email' %}">Forgot password?</a>
+             </div>
+            <div class="input-box button">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+        <div class="register">
+            Don't have account? <a href="{% url 'user:register' %}">Register</a>
+        </div>
+    </div>
+</body>
