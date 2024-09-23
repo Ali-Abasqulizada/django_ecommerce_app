@@ -2,6 +2,7 @@
 <title>SENJA</title>
 <link rel="stylesheet" href="{% static 'assets/signin.css' %}">
 <link rel="stylesheet" href="{% static 'assets/messages.css' %}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="message-container">
     {% for message in messages %}
     <div {% if message.tags %} class="message-{{message.tags}}" {% endif %}>{{message}}</div>

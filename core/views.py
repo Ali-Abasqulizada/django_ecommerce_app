@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from . import models, forms
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 
 def index(request):
     return render(request, 'core/index.html')
@@ -195,3 +197,27 @@ def search_category(request, name):
     except:
         messages.warning(request, 'Category does not exits')
     return redirect('core:shop')
+
+def contact_me(request):
+    if request.method == 'POST':
+        customer_name = request.POST.get('customer_name')
+        customer_email = request.POST.get('customer_email')
+        phone = request.POST.get('customer_phone')
+        customer_message = request.POST.get('customer_message')
+        context = {
+            'name': customer_name,
+            'email': customer_email,
+            'phone': phone,
+            'message': customer_message
+        }
+        mail_subject = 'Someone send you a message'
+        mail_body = render_to_string('core/mail_to_ali.html', context)
+        email = EmailMessage(
+            mail_subject,
+            mail_body,
+            to=['ali.abasqulu@gmail.com']
+        )
+        email.content_subtype = 'html'
+        email.send()
+        messages.info(request, 'Your message has been sent successfully')
+    return render(request, 'core/contact_me.html')

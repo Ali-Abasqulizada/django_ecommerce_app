@@ -1,0 +1,160 @@
+:root {
+    font-size: 15px;
+}
+
+.contact_me_holder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+}
+
+.contact_me_holder img{
+    user-select: none;
+}
+
+.contact_me_container {
+    font-family: 'Poppins', sans-serif;
+	background: rgba(255, 255, 255, 0.3);
+	max-width: 370px;
+	width: 100%;
+	padding: 25px 30px;
+	border-radius: 5px;
+}
+
+.contact_me_container form .title {
+	font-size: 30px;
+	font-weight: 600;
+	margin: 20px 0 10px 0;
+	position: relative;
+}
+
+.contact_me_container form .title:before {
+	content: '';
+	position: absolute;
+	height: 4px;
+	width: 33px;
+	left: 0px;
+	bottom: 3px;
+	border-radius: 5px;
+	background: linear-gradient(to right, #99004d 0%, #ff0080 100%);
+}
+
+.contact_me_container form .input-box {
+	width: 100%;
+	height: 45px;
+	margin-top: 25px;
+	position: relative;
+}
+
+.contact_me_container form .input-box button {
+	width: 100%;
+	height: 100%;
+	outline: none;
+	font-size: 16px;
+	border: none;
+}
+
+.contact_me_container form .button {
+	margin: 0px 0 20px 0;
+}
+
+.contact_me_container .input-box button {
+	background: linear-gradient(to right, #99004d 0%, #ff0080 100%);
+	font-size: 17px;
+	color: #fff;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.contact_me_container .input-box button:hover {
+	letter-spacing: 1px;
+	background: linear-gradient(to left, #99004d 0%, #ff0080 100%);
+}
+
+.home{
+	width: 20px;
+	height: 20px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+textarea{
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+textarea:focus{
+    border-color: #ff0080;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 0, 128, 0.2);
+}
+
+textarea{
+    resize: none;
+    height: 200px;
+}
+
+.contact_me_container p{
+    font-family: 'Outfit', sans-serif;
+}
+
+.contact_infos{
+    width: 100%;
+}
+
+.one_contact{
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.one_contact img{
+    width: 20px;
+    height: 20px;
+}
+
+.social_media_accounts{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.social_media_accounts img{
+    width: 20px;
+    height: 20px;
+}
+
+.my_contact_logo{
+    width: 100%;
+}
+
+@media screen and (max-width: 1023px) {
+    .contact_me_holder{
+        flex-direction: column;
+    }
+    
+    .contact_me_container {
+        max-width: 100%;
+    }
+
+    .my_contact_logo{
+        display: none;
+    }
+}

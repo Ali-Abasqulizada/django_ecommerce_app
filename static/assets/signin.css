@@ -112,6 +112,7 @@ input[type="number"]:focus{
 	height: 100vh;
 	position: absolute;
 	z-index: -1;
+	object-fit: cover;
 }
 
 

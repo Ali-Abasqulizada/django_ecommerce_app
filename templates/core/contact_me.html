@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/contact_me.css' %}">
+<style>
+    @font-face {
+        font-family: 'Outfit';
+        src: url('{% static "fonts/Outfit-Regular.ttf" %}') format('truetype');
+    }
+</style>
+<div class="contact_me_holder">
+    <div class="contact_me_container">
+        <a href="{% url 'core:index' %}"><img src="{% static 'img/go_home.svg' %}" alt="home" class="home"></a>
+        <form method="post">
+            {% csrf_token %}
+            <div class="title">Contact Me</div>
+            <input type="text" name="customer_name" placeholder="Your full name" required>
+            <input type="email" name="customer_email" placeholder="Your email" required>
+            <input type="text" name="customer_phone" placeholder="Your phone number" required>
+            <textarea name="customer_message" placeholder="Your message" required></textarea>
+            <div class="input-box button">
+                <button type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+    <div class="contact_me_container">
+        <p>Hello, my name is Ali Abasgulizada. You can reach me through these social media accounts</p>
+        <div class="contact_infos">
+            <div class="one_contact">
+                <img src="{% static 'img/mail.svg' %}" alt="mail">
+                <p>ali.abasqulu@gmail.com</p>
+            </div>
+            <div class="one_contact">
+                <img src="{% static 'img/phone.svg' %}" alt="phone">
+                <p>+994 55 621 56 89</p>
+            </div>
+        </div>
+        <div class="social_media_accounts">
+            <a href="https://www.linkedin.com/in/ali-abasqulizada-671a64272?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><img src="{% static 'img/linkedin.svg' %}" alt="linkedin"></a>
+            <a href="https://github.com/Ali-Abasqulizada"><img src="{% static 'img/github.svg' %}" alt="github"></a>
+            <a href="https://www.instagram.com/abasqulizade?utm_source=qr&igsh=MWhpejE0MDJkeTlzNQ=="><img src="{% static 'img/instagram.svg' %}" alt="instagram"></a>
+            <a href="https://www.facebook.com/share/FKpsvMQSYUHJECA2/?mibextid=qi2Omg"><img src="{% static 'img/facebook.svg' %}" alt="facebook"></a>
+        </div>
+        <img src="{% static 'img/senja.png' %}" alt="logo" class="my_contact_logo">
+    </div>
+</div>
+{% endblock %}
