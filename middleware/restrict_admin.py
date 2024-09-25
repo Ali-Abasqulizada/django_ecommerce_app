@@ -11,7 +11,7 @@ class AdminSuperuserRequiredMiddleware:
         if request.path.startswith(reverse('admin:index')):  # This ensures it's the admin path
             if not request.user.is_authenticated:
                 return redirect(settings.LOGIN_URL)  # Redirect to login if not authenticated
-            elif not request.user.is_superuser:
+            elif not request.user.is_active:
                 messages.error(request, 'You have not access')
                 return redirect(settings.LOGIN_URL) 
 
