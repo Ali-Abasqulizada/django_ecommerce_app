@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'user',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -101,3 +102,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'example@gmail.com'  # Your email
 EMAIL_HOST_PASSWORD = '*'  # Your password
 DEFAULT_FROM_EMAIL = 'Django app'
+
+STRIPE_PUBLISHABLE_KEY = "*"  # Your stipe app public key
+STRIPE_SECRET_KEY = "*"  # Your stipe app secret key

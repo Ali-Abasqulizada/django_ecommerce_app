@@ -6,6 +6,7 @@
     --var-heading: normal normal 600 1.5em/1.6em 'Outfit', sans-serif;
     --var-small-heading: normal normal 400 1em/1em 'Outfit', sans-serif;
     --var-para: normal normal 300 1em/1.55em 'Outfit', sans-serif;
+    font-size: 15px;
 }
 
 * {

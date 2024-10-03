@@ -58,73 +58,101 @@
     <div class="payment">
         <h1>Cart total</h1>
         <h2>Total: <span id="total-amount">0.00</span>$</h2>
-        <form action="" method="post">
+        <form id="cart-form" action="{% url 'payment:checkout' %}" method="post">
             {% csrf_token %}
+            <input type="hidden" id="hidden-total-cost" name="total_cost">
+            <input type="hidden" id="hidden-clicked-elements" name="all_elements">
+            <input type="hidden" id="hidden-clicked-elements-counts" name="all_elements_counts">
             <button type="submit">Buy</button>
-        </form>
+        </form>        
     </div>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const totalAmountElement = document.getElementById("total-amount");
-        let totalAmount = 0;
-        document.querySelectorAll(".add-to-total").forEach(button => {
-            button.addEventListener("click", function() {
-                const itemTotal = parseFloat(this.closest(".trow").querySelector(".cart-item-total").getAttribute("data-total"));
+document.addEventListener("DOMContentLoaded", function() {
+    const totalAmountElement = document.getElementById("total-amount");
+    const hiddenTotalCostInput = document.getElementById("hidden-total-cost");
+    const hiddenElementsInput = document.getElementById("hidden-clicked-elements");
+    const hiddenCountsInput = document.getElementById("hidden-clicked-elements-counts");
 
-                if (this.classList.contains("clicked")) {
-                    totalAmount -= itemTotal;
-                    if (totalAmount < 0){
-                        totalAmount = 0
-                    }
-                    totalAmountElement.textContent = totalAmount.toFixed(2);
+    let totalAmount = 0;
 
-                    this.classList.remove("clicked");
-                    this.querySelector("img").style.opacity = "1";
-                    this.style.backgroundColor = "";
-                } else {
-                    totalAmount += itemTotal;
-                    totalAmountElement.textContent = totalAmount.toFixed(2);
-                    this.classList.add("clicked");
-                    this.style.backgroundColor = "burlywood";
-                }
-            });
+    document.querySelectorAll(".add-to-total").forEach(button => {
+        button.addEventListener("click", function() {
+            const itemTotal = parseFloat(this.closest(".trow").querySelector(".cart-item-total").getAttribute("data-total"));
+
+            if (this.classList.contains("clicked")) {
+                totalAmount -= itemTotal;
+                if (totalAmount < 0) totalAmount = 0;
+
+                totalAmountElement.textContent = totalAmount.toFixed(2);
+                this.classList.remove("clicked");
+                this.querySelector("img").style.opacity = "1";
+                this.style.backgroundColor = "";
+            } else {
+                totalAmount += itemTotal;
+                totalAmountElement.textContent = totalAmount.toFixed(2);
+                this.classList.add("clicked");
+                this.style.backgroundColor = "burlywood";
+            }
         });
+    });
 
-        document.querySelectorAll(".delete-cart-item").forEach(button => {
-            button.addEventListener("click", function() {
-                const cartItemId = this.getAttribute("data-id");
-                const csrfToken = "{{ csrf_token }}";
+    document.querySelectorAll(".delete-cart-item").forEach(button => {
+        button.addEventListener("click", function() {
+            const cartItemId = this.getAttribute("data-id");
+            const csrfToken = "{{ csrf_token }}";
 
-                fetch("{% url 'core:delete_cart' id=0 %}".replace('0', cartItemId), {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': csrfToken,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({})
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        document.getElementById(`cart-item-${cartItemId}`).remove();
-                        totalAmount -= parseFloat(data.cart_total);
-                        if (totalAmount < 0){
-                            totalAmount = 0
-                        }
-                        totalAmountElement.textContent = totalAmount.toFixed(2);
-                    } else {
-                        alert(data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while deleting the item. Please try again.');
-                });
+            fetch("{% url 'core:delete_cart' id=0 %}".replace('0', cartItemId), {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`cart-item-${cartItemId}`).remove();
+                    const cartTotal = parseFloat(data.cart_total);
+                    totalAmount -= cartTotal;
+                    if (totalAmount < 0) totalAmount = 0;
+
+                    totalAmountElement.textContent = totalAmount.toFixed(2);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while deleting the item. Please try again.');
             });
         });
     });
+
+    document.getElementById("cart-form").addEventListener("submit", function(event) {
+        let selectedTotal = 0;
+        let selectedNames = [];
+        let selectedQuantities = [];
+
+        document.querySelectorAll(".add-to-total.clicked").forEach(clickedButton => {
+            const trow = clickedButton.closest(".trow");
+            const itemTotal = parseFloat(trow.querySelector(".cart-item-total").getAttribute("data-total"));
+            const productName = trow.querySelector(".info_holder a").textContent;
+
+            const productQuantity = trow.querySelectorAll(".info_holder")[2].querySelectorAll("p")[1].textContent;  
+
+            selectedTotal += itemTotal;
+            selectedNames.push(productName);
+            selectedQuantities.push(productQuantity);
+        });
+
+        hiddenTotalCostInput.value = selectedTotal.toFixed(2);  // Set total cost
+        hiddenElementsInput.value = selectedNames.join(', ');  // Set clicked product names
+        hiddenCountsInput.value = selectedQuantities.join(', ');  // Set clicked quantities
+    });
+});
 </script>
 
 {% endblock %}
