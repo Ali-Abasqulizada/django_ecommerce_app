@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SENJA</title>
     <link rel="stylesheet" href="{% static 'payment/checkout.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/loader.css' %}">
     <script src="https://js.stripe.com/v3/"></script>
 </head>
+<div id="loader" class="loader-container" style="display: none;">
+    <div class="spinner"></div>
+</div>
 <body>
     <img class="back" src="{% static 'img/login_back.jpg' %}" alt="image">
     <div class="container">
@@ -61,4 +65,5 @@
         });
     });
 </script>
+<script src="{% static 'js/loader.js' %}"></script>
 </html>
