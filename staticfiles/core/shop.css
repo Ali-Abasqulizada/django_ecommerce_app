@@ -51,9 +51,13 @@
     color: black;
 }
 
-.shop_body .card-container {
+.shop_holder a{
     width: 100%;
-    max-width: 300px;
+    max-width: 350px;
+}
+
+.shop_body .card-container {
+    max-width: 350px;
     margin: 2em auto;
     background-color: hsl(230, 100%, 98%);
     border-radius: 15px;
@@ -120,6 +124,7 @@
 
 .shop_holder{
     display: flex;
+    justify-content: space-around;
     gap: 20px;
     flex-wrap:wrap;
 }
@@ -191,6 +196,7 @@
     text-align: center;
     padding: 0px 40px;
     margin-top: 2.4rem;
+    margin-right: 20px;
     border-radius: 15px;
     position: sticky;
     top: 5rem;
@@ -218,6 +224,7 @@
         height: auto;
         padding-bottom: 20px;
         margin-top: 0px;
+        margin-right: 0px;
     }
 
     .main_word{

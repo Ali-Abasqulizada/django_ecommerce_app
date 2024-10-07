@@ -86,7 +86,6 @@
 .tbody a {
     font: var(--var-small-heading);
     color: var(--var-card-dark);
-    text-decoration: none;
 }
 
 .tbody p {

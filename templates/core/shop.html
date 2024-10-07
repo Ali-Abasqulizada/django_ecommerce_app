@@ -42,23 +42,25 @@
     <div class="shop_body_products">
         <div class="shop_holder">
             {% for product in products %}
-                <div class="card-container">
-                    <div class="hero-image_container">
-                        <img class="hero-image" src="{{ product.image.url }}" alt="Spinning glass cube"/>
+                <a href="{% url 'core:product' name=product.slug %}">
+                    <div class="card-container">
+                        <div class="hero-image_container">
+                            <img class="hero-image" src="{{ product.image.url }}" alt="Spinning glass cube"/>
+                        </div>
+                        <main class="main-content">
+                          <h1>{{ product.name }}</h1>
+                          <p class="product_description" >{{ product.description }}</p>
+                          <div class="flex-row">
+                            <div class="coin-base">
+                              <h2>{{ product.price }}$</h2>
+                            </div>
+                            <div class="stars">
+                                {{ product.average_rating|floatformat:1 }} / 5.0
+                            </div>
+                          </div>
+                        </main>
                     </div>
-                    <main class="main-content">
-                      <h1><a href="{% url 'core:product' name=product.slug %}">{{ product.name }}</a></h1>
-                      <p class="product_description" >{{ product.description }}</p>
-                      <div class="flex-row">
-                        <div class="coin-base">
-                          <h2>{{ product.price }}$</h2>
-                        </div>
-                        <div class="stars">
-                            {{ product.average_rating|floatformat:1 }} / 5.0
-                        </div>
-                      </div>
-                    </main>
-                </div>
+                </a>
             {% endfor %}
         </div>
         <div class="page_holder">
