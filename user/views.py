@@ -89,7 +89,7 @@ def password_reset_email(request):
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': tokens.account_activation_token.make_token(user)
+                'token': tokens.password_reset_token.make_token(user)
             }
             mail_subject = 'Reset your password'
             mail_body = render_to_string('user/password_reset_send_email.html', context)
@@ -108,7 +108,7 @@ def set_new_password(request, uidb64, token):
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
-    if user is not None and tokens.account_activation_token.check_token(user, token):
+    if user is not None and tokens.password_reset_token.check_token(user, token):
         form = forms.SetNewResetPasswordForm(request.POST or None)
         if form.is_valid():
             new_password = form.cleaned_data.get('password')
