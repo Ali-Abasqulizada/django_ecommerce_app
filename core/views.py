@@ -11,13 +11,13 @@ from django.template.loader import render_to_string
 def index(request):
     carts = 0
     if request.user.is_authenticated:
-        carts = len(models.Cart.objects.filter(user=request.user))
+        carts = models.Cart.objects.filter(user=request.user).count()
     return render(request, 'core/index.html', {'cartsCount':carts})
 
 def shop(request):
     carts = 0
     if request.user.is_authenticated:
-        carts = len(models.Cart.objects.filter(user=request.user))
+        carts = models.Cart.objects.filter(user=request.user).count()
     product_list = models.Product.objects.all().order_by('-created_at')
     paginator = Paginator(product_list, 9)
     page_number = request.GET.get('page')
@@ -40,7 +40,7 @@ def category(request, name):
         products = paginator.get_page(page_number)
         carts = 0
         if request.user.is_authenticated:
-            carts = len(models.Cart.objects.filter(user=request.user))
+            carts = models.Cart.objects.filter(user=request.user).count()
         context = {
             'category': category_element,
             'slug': name,
@@ -60,7 +60,7 @@ def product(request, name):
         reviews = models.Review.objects.filter(product=product_element).select_related('user').order_by('-created_at')
         carts = 0
         if request.user.is_authenticated:
-            carts = len(models.Cart.objects.filter(user=request.user))
+            carts = models.Cart.objects.filter(user=request.user).count()
             my_review = reviews.filter(user=request.user).first()
             form = forms.ReviewForm(instance=my_review or None)
         else:
@@ -175,7 +175,7 @@ def search_shop(request):
     categories = models.Category.objects.all()
     carts = 0
     if request.user.is_authenticated:
-        carts = len(models.Cart.objects.filter(user=request.user))
+        carts = models.Cart.objects.filter(user=request.user).count()
     context = {
         'products': products,
         'categories': categories,
@@ -205,7 +205,7 @@ def search_category(request, name):
         categories = models.Category.objects.all()
         carts = 0
         if request.user.is_authenticated:
-            carts = len(models.Cart.objects.filter(user=request.user))
+            carts = models.Cart.objects.filter(user=request.user).count()
         context = {
             'products': products,
             'categories': categories,
@@ -244,5 +244,5 @@ def contact_me(request):
         messages.info(request, 'Your message has been sent successfully')
     carts = 0
     if request.user.is_authenticated:
-        carts = len(models.Cart.objects.filter(user=request.user))
+        carts = models.Cart.objects.filter(user=request.user).count()
     return render(request, 'core/contact_me.html', {'cartsCount':carts})
