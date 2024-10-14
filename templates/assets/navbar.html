@@ -37,9 +37,10 @@
       </div>
       <div class="nav__actions">
         {% if request.user.is_authenticated %}
-        <a href="{% url 'core:cart' %}" class="custom_add_link">
+        <a href="{% url 'core:cart' %}" class="custom_add_link cartCountMother">
             <p class="dont_see">Cart</p>
             <img src="{% static 'img/cart.svg' %}" alt="logout" class="custom_add_menu">
+            <div class="cartCount">{{cartsCount}}</div>
         </a>
         <a href="{% url 'user:logout' %}" class="custom_add_link">
             <p class="dont_see">Logout</p>

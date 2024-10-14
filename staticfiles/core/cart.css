@@ -207,3 +207,7 @@
         font-size: 40px;
     }
 }
+
+.cartCount{
+    display: none;
+}

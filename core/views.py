@@ -9,9 +9,15 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
 def index(request):
-    return render(request, 'core/index.html')
+    carts = 0
+    if request.user.is_authenticated:
+        carts = len(models.Cart.objects.filter(user=request.user))
+    return render(request, 'core/index.html', {'cartsCount':carts})
 
 def shop(request):
+    carts = 0
+    if request.user.is_authenticated:
+        carts = len(models.Cart.objects.filter(user=request.user))
     product_list = models.Product.objects.all().order_by('-created_at')
     paginator = Paginator(product_list, 9)
     page_number = request.GET.get('page')
@@ -19,7 +25,8 @@ def shop(request):
     categories = models.Category.objects.all()
     context = {
         'products': products,
-        'categories': categories
+        'categories': categories,
+        'cartsCount': carts
     }
     return render(request, 'core/shop.html', context)
 
@@ -31,11 +38,15 @@ def category(request, name):
         paginator = Paginator(product_list, 9)
         page_number = request.GET.get('page')
         products = paginator.get_page(page_number)
+        carts = 0
+        if request.user.is_authenticated:
+            carts = len(models.Cart.objects.filter(user=request.user))
         context = {
             'category': category_element,
             'slug': name,
             'categories': categories,
-            'products': products
+            'products': products,
+            'cartsCount': carts
         }
         return render(request, 'core/category.html', context)
     except:
@@ -47,7 +58,9 @@ def product(request, name):
         product_element = models.Product.objects.get(slug=name)
         categories = models.Category.objects.all()
         reviews = models.Review.objects.filter(product=product_element).select_related('user').order_by('-created_at')
+        carts = 0
         if request.user.is_authenticated:
+            carts = len(models.Cart.objects.filter(user=request.user))
             my_review = reviews.filter(user=request.user).first()
             form = forms.ReviewForm(instance=my_review or None)
         else:
@@ -56,7 +69,8 @@ def product(request, name):
             'product': product_element,
             'categories': categories,
             'form': form,
-            'reviews': reviews
+            'reviews': reviews,
+            'cartsCount': carts
         }
         return render(request, 'core/product.html', context)
     except:
@@ -159,11 +173,15 @@ def search_shop(request):
     page_number = request.GET.get('page')
     products = paginator.get_page(page_number)
     categories = models.Category.objects.all()
+    carts = 0
+    if request.user.is_authenticated:
+        carts = len(models.Cart.objects.filter(user=request.user))
     context = {
         'products': products,
         'categories': categories,
         'keyword': keyword,
-        'filter': filter_type
+        'filter': filter_type,
+        'cartsCount': carts
     }
     return render(request, 'core/shop.html', context)
 
@@ -185,13 +203,17 @@ def search_category(request, name):
         page_number = request.GET.get('page')
         products = paginator.get_page(page_number)
         categories = models.Category.objects.all()
+        carts = 0
+        if request.user.is_authenticated:
+            carts = len(models.Cart.objects.filter(user=request.user))
         context = {
             'products': products,
             'categories': categories,
             'keyword': keyword,
             'filter': filter_type,
             'category': category_element,
-            'slug': name
+            'slug': name,
+            'cartsCount': carts
         }
         return render(request, 'core/category.html', context)
     except:
@@ -220,4 +242,7 @@ def contact_me(request):
         email.content_subtype = 'html'
         email.send()
         messages.info(request, 'Your message has been sent successfully')
-    return render(request, 'core/contact_me.html')
+    carts = 0
+    if request.user.is_authenticated:
+        carts = len(models.Cart.objects.filter(user=request.user))
+    return render(request, 'core/contact_me.html', {'cartsCount':carts})
